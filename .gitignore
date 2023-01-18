@@ -30,3 +30,56 @@
 *.exe
 *.out
 *.app
+Spatial_Saturator/Builds/VisualStudio2022/resources.rc
+Spatial_Saturator/Builds/VisualStudio2022/Spatial_Saturator.sln
+Spatial_Saturator/Builds/VisualStudio2022/Spatial_Saturator_SharedCode.vcxproj
+Spatial_Saturator/Builds/VisualStudio2022/Spatial_Saturator_SharedCode.vcxproj.filters
+Spatial_Saturator/Builds/VisualStudio2022/Spatial_Saturator_SharedCode.vcxproj.user
+Spatial_Saturator/Builds/VisualStudio2022/Spatial_Saturator_VST3.vcxproj
+Spatial_Saturator/Builds/VisualStudio2022/Spatial_Saturator_VST3.vcxproj.filters
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/FileContentIndex/0e288abe-43cf-4aa2-bb3a-13ff0ebfc048.vsidx
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/FileContentIndex/1ad06af1-4af4-4a41-b658-8ac9e5b3c103.vsidx
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/FileContentIndex/87c3e947-05f8-4fb0-b0c4-79b63263284f.vsidx
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/FileContentIndex/d34edfd5-571a-42e7-b1fa-dd09a1b5b71c.vsidx
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/FileContentIndex/read.lock
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/.suo
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/Browse.VC.db
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/fileList.bin
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/Solution.VC.db
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/ipch/AutoPCH/b7f24f06606d4d22/SPATIALSATURATORFILTER.ipch
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/ipch/AutoPCH/c17f3781f726527b/PLUGINPROCESSOR.ipch
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/ipch/AutoPCH/d8f905a5778b2ecd/SPATIALSATURATORFILTER.ipch
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/ipch/AutoPCH/df880d6be925fec6/PLUGINEDITOR.ipch
+Spatial_Saturator/Builds/VisualStudio2022/.vs/Spatial_Saturator/v17/ipch/AutoPCH/f5d81c7dc12f0fb3/BASSANDSPACEFILTER.ipch
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/NewProject.Build.CppClean.log
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/NewProject.lib.recipe
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/NewProject.pdb
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_Saturator_SharedCode.log
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_Saturator_SharedCode.vcxproj.FileListAbsolute.txt
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_.88506E83.tlog/CL.10956.write.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_.88506E83.tlog/CL.command.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_.88506E83.tlog/CL.read.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_.88506E83.tlog/Lib.command.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_.88506E83.tlog/Lib-link.read.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_.88506E83.tlog/Lib-link.write.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/Shared Code/Spatial_.88506E83.tlog/Spatial_Saturator_SharedCode.lastbuildstate
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/NewProject.Build.CppClean.log
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/NewProject.exp
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/NewProject.ilk
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/NewProject.pdb
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/NewProject.vst3
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/NewProject.vst3.recipe
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/resources.res
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_Saturator_VST3.log
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_Saturator_VST3.vcxproj.FileListAbsolute.txt
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/CL.command.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/CL.read.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/CL.write.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/link.command.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/link.read.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/link.write.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/link.write.2u.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/rc.command.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/rc.read.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/rc.write.1.tlog
+Spatial_Saturator/Builds/VisualStudio2022/x64/Debug/VST3/Spatial_.5AB1AADD.tlog/Spatial_Saturator_VST3.lastbuildstate
