@@ -23,6 +23,11 @@ SpatialSaturatorAudioProcessor::SpatialSaturatorAudioProcessor()
     m_sideGain = m_state.getRawParameterValue("sideGainID");
     m_sideFreqLower = m_state.getRawParameterValue("sideFreqLowerID");
     m_sideFreqUpper = m_state.getRawParameterValue("sideFreqUpperID");
+    m_tanhAmplitude = m_state.getRawParameterValue("tanhAmplitudeID");
+    m_tanhSlope = m_state.getRawParameterValue("tanhSlopeID");
+    m_saturatorMix = m_state.getRawParameterValue("saturatorMixID");
+    m_sinAmplitude = m_state.getRawParameterValue("sinAmplitudeID");
+    m_sinFreq = m_state.getRawParameterValue("sinFreqID");
     m_makeUpGain = m_state.getRawParameterValue("makeUpGainID");
 }
 
@@ -48,6 +53,21 @@ juce::AudioProcessorValueTreeState::ParameterLayout SpatialSaturatorAudioProcess
 
     auto sideFreqUpper = std::make_unique<juce::AudioParameterFloat>("sideFreqUpperID", "side Freq Upper (Hz)", juce::NormalisableRange<float>(1000.0f, 20000.0f, 1.0f), 4000.0f);
     params.push_back(std::move(sideFreqUpper));
+
+    auto tanhAmp = std::make_unique<juce::AudioParameterFloat>("tanhAmplitudeID", "Tanh Amplitude", juce::NormalisableRange<float>(0.5f, 100.0f, 1.0f), 50.0f);
+    params.push_back(std::move(tanhAmp));
+
+    auto tanhSlope = std::make_unique<juce::AudioParameterFloat>("tanhSlopeID", "Tanh Slope", juce::NormalisableRange<float>(1.0f, 15.0f, 1.0f), 7.0f);
+    params.push_back(std::move(tanhSlope));
+
+    auto saturatorMix = std::make_unique<juce::AudioParameterFloat>("saturatorMixID", "Saturator Mix (d/w)", juce::NormalisableRange<float>(1.0f, 100.0f, 1.0f), 50.0f);
+    params.push_back(std::move(saturatorMix));
+
+    auto sinAmp = std::make_unique<juce::AudioParameterFloat>("sinAmplitudeID", "Sin Amplitude", juce::NormalisableRange<float>(0.5f, 100.0f, 1.0f), 50.0f);
+    params.push_back(std::move(sinAmp));
+
+    auto sinFreq = std::make_unique<juce::AudioParameterFloat>("sinFrequencyID", "Sin Frequency (Hz)", juce::NormalisableRange<float>(0.5f, 100.0f, 1.0f), 60.0f);
+    params.push_back(std::move(sinFreq));
 
     auto makeUpGain = std::make_unique<juce::AudioParameterFloat>("makeUpGainID", "Make Up Gain (dB)", juce::NormalisableRange<float>(-12.0f, 12.0f, 0.5f), 0.0f);
     params.push_back(std::move(makeUpGain));
@@ -197,12 +217,12 @@ void SpatialSaturatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
             input = (double)buffer.getSample(i, n);
 
             // waveshaper saturator 
-            //input = tanh_amp * tanh(input * tanh_slope) + sine_amp * sin(input * sine_freq);
+            input = ((double)*m_tanhAmplitude*0.01) * tanh(input * (double)*m_tanhSlope) + ((double)*m_sinAmplitude*0.01) * sin(input * (double)*m_sinFreq);
 
             // Mixer Processing
-            //input = input * mix;
+            input = input * (double)*m_saturatorMix;
 
-            // Limiter
+            // Limiter (To be developed)
 
         }
     }
