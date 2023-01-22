@@ -67,6 +67,11 @@ public:
     std::atomic<float>* m_sideFreqLower = nullptr;
     std::atomic<float>* m_sideFreqUpper = nullptr;
     std::atomic<float>* m_makeUpGain = nullptr;
+    std::atomic<float>* m_tanhAmplitude = nullptr;
+    std::atomic<float>* m_tanhSlope = nullptr;
+    std::atomic<float>* m_saturatorMix = nullptr;
+    std::atomic<float>* m_sinAmplitude = nullptr;
+    std::atomic<float>* m_sinFreq = nullptr;
 
 private:
 

@@ -56,6 +56,41 @@ SpatialSaturatorAudioProcessorEditor::SpatialSaturatorAudioProcessorEditor(Spati
     sideFreqUpperSliderLabel.setText("Higher side Frequency", juce::dontSendNotification);
     sideFreqUpperSliderLabel.attachToComponent(&sideFreqUpperSlider, true);
 
+    tanhAmplitudeSlider.setTextValueSuffix(" ");
+    addAndMakeVisible(tanhAmplitudeSlider);
+    tanhSlopeSliderAttachment.reset(new SliderAttachment(treeState, "tanhAmplitudeID", tanhAmplitudeSlider));
+    addAndMakeVisible(tanhAmplitudeSliderLabel);
+    tanhAmplitudeSliderLabel.setText("Tanh Amplitude", juce::dontSendNotification);
+    tanhAmplitudeSliderLabel.attachToComponent(&tanhAmplitudeSlider, true);
+
+    tanhSlopeSlider.setTextValueSuffix(" g ");
+    addAndMakeVisible(tanhSlopeSlider);
+    tanhAmplitudeSliderAttachment.reset(new SliderAttachment(treeState, "tanhSlopeID", tanhSlopeSlider));
+    addAndMakeVisible(tanhSlopeSliderLabel);
+    tanhSlopeSliderLabel.setText("Tanh Slope", juce::dontSendNotification);
+    tanhSlopeSliderLabel.attachToComponent(&tanhSlopeSlider, true);
+
+    saturatorMixSlider.setTextValueSuffix(" ");
+    addAndMakeVisible(saturatorMixSlider);
+    saturatorMixSliderAttachment.reset(new SliderAttachment(treeState, "saturatorMixID", saturatorMixSlider));
+    addAndMakeVisible(saturatorMixSliderLabel);
+    saturatorMixSliderLabel.setText("Saturation Mix", juce::dontSendNotification);
+    saturatorMixSliderLabel.attachToComponent(&saturatorMixSlider, true);
+
+    sinAmplitudeSlider.setTextValueSuffix(" ");
+    addAndMakeVisible(sinAmplitudeSlider);
+    sinAmplitudeSliderAttachment.reset(new SliderAttachment(treeState, "sinAmplitudeID", sinAmplitudeSlider));
+    addAndMakeVisible(sinAmplitudeSliderLabel);
+    sinAmplitudeSliderLabel.setText("Sin Amplitude", juce::dontSendNotification);
+    sinAmplitudeSliderLabel.attachToComponent(&sinAmplitudeSlider, true);
+
+    sinFrequencySlider.setTextValueSuffix(" Hz ");
+    addAndMakeVisible(sinFrequencySlider);
+    sinFrequencySliderAttachment.reset(new SliderAttachment(treeState, "sinFreqID", sinAmplitudeSlider));
+    addAndMakeVisible(sinFrequencySliderLabel);
+    sinFrequencySliderLabel.setText("Sin Frequency", juce::dontSendNotification);
+    sinFrequencySliderLabel.attachToComponent(&sinFrequencySlider, true);
+
     makeUpGainSlider.setTextValueSuffix(" dB ");
     addAndMakeVisible(makeUpGainSlider);
     makeUpGainSliderAttachment.reset(new SliderAttachment(treeState, "makeUpGainID", makeUpGainSlider));
@@ -88,7 +123,7 @@ void SpatialSaturatorAudioProcessorEditor::resized()
     auto sliderLeft = 250;
     auto sliderHeight = 20;
 
-    int numSliders = 6;
+    int numSliders = 11;
     int N = 1;
     int step = (getHeight() / (numSliders + 1));
 
@@ -97,5 +132,10 @@ void SpatialSaturatorAudioProcessorEditor::resized()
     sideGainSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
     sideFreqLowerSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
     sideFreqUpperSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
+    tanhAmplitudeSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
+    tanhSlopeSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
+    saturatorMixSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
+    sinAmplitudeSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
+    sinFrequencySlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
     makeUpGainSlider.setBounds(sliderLeft, (N++ * step) - (sliderHeight / 2), getWidth() - sliderLeft * 1.5, sliderHeight);
 }

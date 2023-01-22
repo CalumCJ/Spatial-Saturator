@@ -37,30 +37,55 @@ private:
     // Reference to Value Tree State object
     juce::AudioProcessorValueTreeState& treeState;
 
-    // mid Gain Slider
+    // Mid Gain Slider
     juce::Slider midGainSlider;
     juce::Label midGainSliderLabel;
     std::unique_ptr<SliderAttachment> midGainSliderAttachment;
 
-    // mid Frequency Slider
+    // Mid Frequency Slider
     juce::Slider midFreqSlider;
     juce::Label midFreqSliderLabel;
     std::unique_ptr<SliderAttachment> midFreqSliderAttachment;
 
-    // side Gain Slider
+    // Side Gain Slider
     juce::Slider sideGainSlider;
     juce::Label sideGainSliderLabel;
     std::unique_ptr<SliderAttachment> sideGainSliderAttachment;
 
-    // side Frequency Lower Slider
+    // Side Frequency Lower Slider
     juce::Slider sideFreqLowerSlider;
     juce::Label sideFreqLowerSliderLabel;
     std::unique_ptr<SliderAttachment> sideFreqLowerSliderAttachment;
 
-    // side Frequency Upper Slider
+    // Side Frequency Upper Slider
     juce::Slider sideFreqUpperSlider;
     juce::Label sideFreqUpperSliderLabel;
     std::unique_ptr<SliderAttachment> sideFreqUpperSliderAttachment;
+
+    // Tanh amplitude Slider
+    juce::Slider tanhAmplitudeSlider;
+    juce::Label tanhAmplitudeSliderLabel;
+    std::unique_ptr<SliderAttachment> tanhAmplitudeSliderAttachment;
+
+    // Tanh slope Slider
+    juce::Slider tanhSlopeSlider;
+    juce::Label tanhSlopeSliderLabel;
+    std::unique_ptr<SliderAttachment> tanhSlopeSliderAttachment;
+
+    // Saturator Mix Slider
+    juce::Slider saturatorMixSlider;
+    juce::Label saturatorMixSliderLabel;
+    std::unique_ptr<SliderAttachment> saturatorMixSliderAttachment;
+
+    // Sin Amplitude Slider
+    juce::Slider sinAmplitudeSlider;
+    juce::Label sinAmplitudeSliderLabel;
+    std::unique_ptr<SliderAttachment> sinAmplitudeSliderAttachment;
+
+    // Sin Frequency Slider
+    juce::Slider sinFrequencySlider;
+    juce::Label sinFrequencySliderLabel;
+    std::unique_ptr<SliderAttachment> sinFrequencySliderAttachment;
 
     // Make Up Gain Slider
     juce::Slider makeUpGainSlider;
