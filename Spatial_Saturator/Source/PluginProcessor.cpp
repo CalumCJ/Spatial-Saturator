@@ -66,7 +66,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SpatialSaturatorAudioProcess
     auto sinAmp = std::make_unique<juce::AudioParameterFloat>("sinAmplitudeID", "Sin Amplitude", juce::NormalisableRange<float>(0.5f, 100.0f, 1.0f), 50.0f);
     params.push_back(std::move(sinAmp));
 
-    auto sinFreq = std::make_unique<juce::AudioParameterFloat>("sinFrequencyID", "Sin Frequency (Hz)", juce::NormalisableRange<float>(0.5f, 100.0f, 1.0f), 60.0f);
+    auto sinFreq = std::make_unique<juce::AudioParameterFloat>("sinFreqID", "Sin Frequency (Hz)", juce::NormalisableRange<float>(0.5f, 100.0f, 1.0f), 60.0f);
     params.push_back(std::move(sinFreq));
 
     auto makeUpGain = std::make_unique<juce::AudioParameterFloat>("makeUpGainID", "Make Up Gain (dB)", juce::NormalisableRange<float>(-12.0f, 12.0f, 0.5f), 0.0f);
@@ -210,9 +210,9 @@ void SpatialSaturatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
     double input;
 
     // Waveshaper Saturator and Limiter
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+    for (auto i = 0; i < totalNumOutputChannels; ++i)
     {
-        for (auto n = numSamples; n < numSamples; ++n)
+        for (auto n = 0; n < numSamples; ++n)
         {
             input = (double)buffer.getSample(i, n);
 
@@ -265,14 +265,12 @@ void SpatialSaturatorAudioProcessor::processMidsSides(juce::AudioBuffer<float>& 
 {
     for (int n = 0; n < numberSamples; ++n)
     {
-        // process mids
-        double mids = ((double)buffer.getSample(0, n) + (double)buffer.getSample(1, n)) / 2;
-        // process sides
-        double sides = ((double)buffer.getSample(0, n) - (double)buffer.getSample(1, n)) / 2;
 
-        // Set output
-        buffer.setSample(0, n, mids);
-        buffer.setSample(1, n, sides);
+        float left = buffer.getSample(0, n);
+        float right = buffer.getSample(1, n);
+        
+        buffer.setSample(0, n, (left + right) * 0.5f);
+        buffer.setSample(1, n, (left - right) * 0.5f);   
 
     }
 }
