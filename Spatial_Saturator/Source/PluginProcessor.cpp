@@ -209,21 +209,23 @@ void SpatialSaturatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
 
     double input;
 
-    // Waveshaper Saturator and Limiter
+    // The waveshaper section
     for (auto i = 0; i < totalNumOutputChannels; ++i)
     {
         for (auto n = 0; n < numSamples; ++n)
         {
-            input = (double)buffer.getSample(i, n);
+            double drySignal = (double)buffer.getSample(i, n);
 
             // waveshaper saturator 
-            input = ((double)*m_tanhAmplitude*0.01) * tanh(input * (double)*m_tanhSlope) + ((double)*m_sinAmplitude*0.01) * sin(input * (double)*m_sinFreq);
+            double wetSignal = ((double)*m_tanhAmplitude * 0.01) * tanh(drySignal * (double)*m_tanhSlope) +
+                ((double)*m_sinAmplitude * 0.01) * sin(drySignal * (double)*m_sinFreq);
 
-            // Mixer Processing
-            input = input * (double)*m_saturatorMix;
+            // Proper dry/wet mix (0-100%)
+            double mixAmount = (double)*m_saturatorMix * 0.01;
+            double output = drySignal * (1.0 - mixAmount) + wetSignal * mixAmount;
 
-            // Limiter (To be developed)
-
+            // Apply makeup gain and write back!
+            buffer.setSample(i, n, (float)(output * juce::Decibels::decibelsToGain((float)*m_makeUpGain)));
         }
     }
 }
