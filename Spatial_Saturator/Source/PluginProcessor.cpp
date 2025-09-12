@@ -148,6 +148,29 @@ void SpatialSaturatorAudioProcessor::prepareToPlay(double sampleRate, int sample
     sideShelfFilter.setSampleRate(static_cast<float>(sampleRate));
     sideHpFilter.setSampleRate(static_cast<float>(sampleRate));
 
+    // Initialize smoothed values
+// Using 50ms ramp time - adjust this value to taste (shorter = faster response, longer = smoother)
+    const double rampTimeSeconds = 0.05;
+
+    m_smoothedMidGain.reset(sampleRate, rampTimeSeconds);
+    m_smoothedSideGain.reset(sampleRate, rampTimeSeconds);
+    m_smoothedMakeUpGain.reset(sampleRate, rampTimeSeconds);
+    m_smoothedTanhAmplitude.reset(sampleRate, rampTimeSeconds);
+    m_smoothedTanhSlope.reset(sampleRate, rampTimeSeconds);
+    m_smoothedSaturatorMix.reset(sampleRate, rampTimeSeconds);
+    m_smoothedSinAmplitude.reset(sampleRate, rampTimeSeconds);
+    m_smoothedSinFreq.reset(sampleRate, rampTimeSeconds);
+
+    // Set initial values
+    m_smoothedMidGain.setCurrentAndTargetValue(*m_midGain);
+    m_smoothedSideGain.setCurrentAndTargetValue(*m_sideGain);
+    m_smoothedMakeUpGain.setCurrentAndTargetValue(*m_makeUpGain);
+    m_smoothedTanhAmplitude.setCurrentAndTargetValue(*m_tanhAmplitude);
+    m_smoothedTanhSlope.setCurrentAndTargetValue(*m_tanhSlope);
+    m_smoothedSaturatorMix.setCurrentAndTargetValue(*m_saturatorMix);
+    m_smoothedSinAmplitude.setCurrentAndTargetValue(*m_sinAmplitude);
+    m_smoothedSinFreq.setCurrentAndTargetValue(*m_sinFreq);
+
 }
 
 void SpatialSaturatorAudioProcessor::releaseResources()
@@ -172,30 +195,30 @@ void SpatialSaturatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // Find buffer length
     const int numSamples = buffer.getNumSamples();
     if (numSamples == 0)
     {
-        return; // Exit if no samples
+        return;
     }
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
+    // Clear unused output channels
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
-    // Two Output channels
-    auto channelDataL = buffer.getWritePointer(0);
-    auto channelDataR = buffer.getWritePointer(1);
+    // Update smoothed parameter targets
+    m_smoothedMidGain.setTargetValue(*m_midGain);
+    m_smoothedSideGain.setTargetValue(*m_sideGain);
+    m_smoothedMakeUpGain.setTargetValue(*m_makeUpGain);
+    m_smoothedTanhAmplitude.setTargetValue(*m_tanhAmplitude);
+    m_smoothedTanhSlope.setTargetValue(*m_tanhSlope);
+    m_smoothedSaturatorMix.setTargetValue(*m_saturatorMix);
+    m_smoothedSinAmplitude.setTargetValue(*m_sinAmplitude);
+    m_smoothedSinFreq.setTargetValue(*m_sinFreq);
 
     // Process L+R into mids & sides
     processMidsSides(buffer, midiMessages, numSamples);
 
-    // Apply mid low shelf to mids
+    // Apply mid low shelf to mids (use smoothed values if your filter supports it)
     midShelfFilter.processFilter(buffer, midiMessages, numSamples, m_midFreq, m_midGain);
 
     // Apply side high pass to sides
@@ -207,25 +230,31 @@ void SpatialSaturatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
     // Process mids+sides back to L&R
     processLeftRight(buffer, midiMessages, numSamples);
 
-    double input;
-
-    // The waveshaper section
+    // The waveshaper section - now with smoothed parameters
     for (auto i = 0; i < totalNumOutputChannels; ++i)
     {
         for (auto n = 0; n < numSamples; ++n)
         {
             double drySignal = (double)buffer.getSample(i, n);
 
-            // waveshaper saturator 
-            double wetSignal = ((double)*m_tanhAmplitude * 0.01) * tanh(drySignal * (double)*m_tanhSlope) +
-                ((double)*m_sinAmplitude * 0.01) * sin(drySignal * (double)*m_sinFreq);
+            // Get smoothed parameter values for this sample
+            float tanhAmp = m_smoothedTanhAmplitude.getNextValue();
+            float tanhSlope = m_smoothedTanhSlope.getNextValue();
+            float sinAmp = m_smoothedSinAmplitude.getNextValue();
+            float sinFreq = m_smoothedSinFreq.getNextValue();
+            float saturatorMix = m_smoothedSaturatorMix.getNextValue();
+            float makeUpGain = m_smoothedMakeUpGain.getNextValue();
 
-            // Proper dry/wet mix (0-100%)
-            double mixAmount = (double)*m_saturatorMix * 0.01;
+            // waveshaper saturator with smoothed values
+            double wetSignal = (tanhAmp * 0.01) * tanh(drySignal * tanhSlope) +
+                (sinAmp * 0.01) * sin(drySignal * sinFreq);
+
+            // Proper dry/wet mix (0-100%) with smoothed mix value
+            double mixAmount = saturatorMix * 0.01;
             double output = drySignal * (1.0 - mixAmount) + wetSignal * mixAmount;
 
-            // Apply makeup gain and write back!
-            buffer.setSample(i, n, (float)(output * juce::Decibels::decibelsToGain((float)*m_makeUpGain)));
+            // Apply makeup gain and write back with smoothed gain
+            buffer.setSample(i, n, (float)(output * juce::Decibels::decibelsToGain(makeUpGain)));
         }
     }
 }

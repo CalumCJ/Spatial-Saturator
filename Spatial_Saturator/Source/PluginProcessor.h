@@ -74,10 +74,18 @@ public:
     std::atomic<float>* m_sinFreq = nullptr;
 
 private:
-
     juce::AudioProcessorValueTreeState m_state;
-
     double m_sampleRate{};
+
+    // Add these smoothed value members:
+    juce::SmoothedValue<float> m_smoothedMidGain;
+    juce::SmoothedValue<float> m_smoothedSideGain;
+    juce::SmoothedValue<float> m_smoothedMakeUpGain;
+    juce::SmoothedValue<float> m_smoothedTanhAmplitude;
+    juce::SmoothedValue<float> m_smoothedTanhSlope;
+    juce::SmoothedValue<float> m_smoothedSaturatorMix;
+    juce::SmoothedValue<float> m_smoothedSinAmplitude;
+    juce::SmoothedValue<float> m_smoothedSinFreq;
 
     void processMidsSides(juce::AudioBuffer<float>&, juce::MidiBuffer&, int numberSamples);
     void processLeftRight(juce::AudioBuffer<float>&, juce::MidiBuffer&, int numberSamples);
